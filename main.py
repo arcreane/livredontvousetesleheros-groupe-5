@@ -9,10 +9,10 @@ livreimport = []
 nouv_liste= []
 listedescartes_sale = []
 listedescartes = []
-with open("livre/livre1.py", "r") as fichier:
+with open("livre/livre1.lvdvelh", "r") as fichier:
     livreimport = "".join(fichier)
     listeimport = livreimport.split("###@@@###@@@")
-    #print(listeimport)
+    print(listeimport)
 for i in range(0,len(listeimport)):
     if "#" not in listeimport[i]:
         nouv_liste.append(listeimport[i])
@@ -22,7 +22,7 @@ for i in range(0,len(nouv_liste)):
 
 print(nouv_liste)
 for i in range(0,len( listedescartes_sale)):
-    #print(listedescartes_sale[i])
+    print(listedescartes_sale[i])
     for y in range(0, len(listedescartes_sale[i])):
         #print(listedescartes_sale[i][y])
         if '' !=  listedescartes_sale[i][y]:
