@@ -1,5 +1,6 @@
 import os
 import tkinter as tk
+import json
 
 #Stocker le livre dans un dico
 
@@ -11,7 +12,9 @@ import tkinter as tk
         self.c = capa
         self.bp = sacados
 """
+"""
 livre={}
+persos = {}
 personnages={}
 #livre = {"numero de carte":["texte a afficher", ["liste de tupples de cartes a coninuer avec leur numéro"], "choses a rajouter au sac a dos"], cartedefin ?}
 livreimport = []
@@ -31,22 +34,25 @@ totalcartes = listeimport[0][0]
 listecapa= str(listeimport[0][1]).split(", ")
 print(listecapa)
 
+print(listeimport[0][3])
+for i in range(0,len(listeimport[0][3].split("|"))):
+    listperso = listeimport[0][3].split("|")
+print(listperso)
+for i in range(0,len(listperso)):
+    listetemp= []
+    for y in range(0, len(listecapa)):
+        print(listetemp)
+        listetemp+= [listperso[i].split(", ")[1].split(";")[y],listecapa[y]]
+    persos[listperso[i].split(", ")[0]] = [listetemp, listperso[i].split(", ")[2].split(";"), listperso[i].split(", ")[3]]
+    print(persos)
 
-for i in range(0,listeimport[0][3]):
-    listepersos = listeimport[0][3+i].split("|")
-
-    personnages[]
-
-
-"""for i in range(0,len(listeimport)):
+for i in range(0,len(listeimport)):
     if "#" not in listeimport[i]:
         nouv_liste.append(listeimport[i])
 for i in range(0,len(nouv_liste)):
     cartes = nouv_liste[i].split("\n")
-    listedescartes_sale.append(cartes)"""
-
-
-"""print(nouv_liste)
+    listedescartes_sale.append(cartes)
+print(nouv_liste)
 for i in range(0,len( listedescartes_sale)):
     print(listedescartes_sale[i])
     for y in range(0, len(listedescartes_sale[i])):
