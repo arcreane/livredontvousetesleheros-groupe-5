@@ -1,3 +1,5 @@
 {
-  1 : ['Blabla',0,0,[((1, "Sortir")),((2, "Chercher la telecommande",)),((3, "prout",))],"H", False]
+  "carte1" : ["Blabla",0,0,[[1, "Sortir"],[2, "Chercher la telecommande"],[3, "prout"]],"H", "False"],
+  "carte2" : ["Blabla",0,0,[[1, "Sortir"],[2, "Chercher la telecommande"],[3, "prout"]],"H", "False"],
+  "carte3" : ["Blabla",0,0,[[1, "Sortir"],[2, "Chercher la telecommande"],[3, "prout"]],"H", "False"]
 }
