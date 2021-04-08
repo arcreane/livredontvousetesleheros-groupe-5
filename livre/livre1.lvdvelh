@@ -1,11 +1,14 @@
-init = []
+10@@ length
+adaptation, connaissances, stress, repos@@listes cappa
+1@@nombre de pesos
+Louis, 2;8;5;6, iPad;iPhone;Macbook;iPencil, 100|nom du perso, capa1:force;capa2:force@@nom du perso, capa1:force;capa2:force|nom du perso, capa1:force;capa2:force
 ###@@@###@@@
-nocarte = 0
-texte = """BLABLABLABLA"""
-sac_a_dos = []
-retrait_sac_a_dos = []
-continue = [((1, "Sortir")),((2, "Chercher le spiles pour la télécommùande"))]
-end = False
+1 @@numéro de la carte
+BLABLABLABLA @@texte
+#null @@ajout sac
+#null @@retrait sac
+1:Sortir,2:Chercher le spiles pour la télécommùande @@ choix
+0
 ###@@@###@@@
 nocarte = 2
 texte = """BLABLABLABLA"""
