@@ -18,6 +18,6 @@ bouton_2.pack()
 
 #début des chapitres
 label_title = Label(window, text="Bienvenue sur notre nouveau jeu : 'Le livre d'on vous êtes le héros'", font =("Baskerville", 16), background ="#f0f0d1", foreground = "black" )
-label_title.pack(expand=BOTTOM)
+
 #fin des chapitres
 window.mainloop()
