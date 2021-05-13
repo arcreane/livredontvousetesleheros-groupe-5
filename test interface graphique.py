@@ -10,10 +10,14 @@ window.config(background="#f0f0d1")
 #fin des paramètres de la fenêtre
 
 #début des paramètres des boutons
-bouton_1 = Button(window, text="Chapitre suivant")
-bouton_2 = Button(window, text="Quitter la partie")
+bouton_1 = Button(window, text="Chapitre suivant",)
+bouton_2 = Button(window, text = "Quitter la partie", command = window.destroy) #bouton Quitter
 bouton_1.pack()
 bouton_2.pack()
+
+fenetre.mainloop()
+
+
 #fin des paramètres des boutons
 
 #début des chapitres
