@@ -1,34 +1,20 @@
-import tkinter as tk
+from tkinter import *
 
-fenetre = tk.Tk()
+fenetre = Tk()
 
-variable_a_modifier = tk.StringVar()  # String
-# variable_a_modifier = tk.IntVar() # Integer
-# variable_a_modifier = tk.DoubleVar() # Float
+cadre = Frame(fenetre, width=50, height=30, borderwidth=1)
+cadre.pack()
 
-label = tk.Label(fenetre, textvariable=variable_a_modifier)
-label.pack()
+indication_nom = Label(cadre, text="Saisissez votre nom en majuscule")
+indication_nom.pack()
 
+nom = StringVar()
+recuperation_nom = nom.get()
+saisir_nom = Entry(cadre, textvariable=nom, width=50)
+saisir_nom.pack()
 
-## Pour modifier le résultat de la variable tkinter
-## On utilise .set()
-def modifier_texte():
-    variable_a_modifier.set('Salut, ça va bien?')
+afficher_nom = Label(cadre4, text="Nom: ")
+afficher_nom.pack(side="left")
 
-
-btn_modifier = tk.Button(fenetre, text="Modifier",
-                         command=modifier_texte)
-btn_modifier.pack()
-
-
-## Pour afficher le résultat de la variable tkinter
-## On utilise .get()
-def print_texte():
-    print(variable_a_modifier.get())
-
-
-btn_print = tk.Button(fenetre, text="Printer",
-                      command=print_texte)
-btn_print.pack()
-
-fenetre.mainloop()
+le_nom = Label(cadre4, text=recuperation_nom)
+le_nom.pack(side="left")

@@ -4,9 +4,7 @@ import os
 savedFile = {1: ""}
 
 
-# ======================================
 # 1 - Classe de la fenêtre pricipale
-# ======================================
 class Win:
     def __init__(self, master, content):
         # Fenêtre principale
@@ -29,12 +27,8 @@ class Win:
     def generate(self):
         self.master.mainloop()
 
-    # ======================================
     #  2 - Définition des actions des menus
-    # ======================================
-    # ------------------------------
     # 2.1 - actions du menu Fichier
-    # -------------------------------
     def quitter(self):
         self.master.quit()
 
@@ -71,10 +65,9 @@ class Win:
         s = self.content.get("1.0", END)
         f.write(s)
         f.close()
-        # ------------------------------
+
 
     # 2.2 - actions du menu Edition
-    # ------------------------------
     def copy(self):
         self.content.clipboard_clear()
         self.content.clipboard_append(self.content.selection_get())
@@ -86,9 +79,7 @@ class Win:
         self.copy()
         self.content.delete("sel.first", "sel.last")
 
-    # ======================================
     #  2 - Méthodes d'ajout des menus
-    # ======================================
     def add_menu(self):
         # 1 - Création de la barre des menus
         menuBar = Menu(self.master)
@@ -110,7 +101,8 @@ class Win:
         menuEdition.add_command(label="Copier", command=self.copy)
         menuEdition.add_command(label="Couper", command=self.cut)
         menuEdition.add_command(label="Coller", command=self.past)
-        # Création du Menu Aide
+        # 4 - Création du Menu Outils
+        # 5 - Création du Menu Aide
         menuAide = Menu(menuBar, tearoff=0)
         menuBar.add_cascade(label="Aide", menu=menuAide)
         menuAide.add_command(label="A propos")
