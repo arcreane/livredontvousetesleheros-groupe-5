@@ -41,8 +41,8 @@ class Win:
         fp = open(file, "r")
         r = fp.read()
         self.content.insert(1.0, r)
-        # Menu Enregistrer sous
 
+# Menu Enregistrer sous
     def saveAs(self):
         # create save dialog
         fichier = self.master.filename = filedialog.asksaveasfilename(initialdir="/",
@@ -55,8 +55,8 @@ class Win:
         s = self.content.get("1.0", END)
         f.write(s)
         f.close()
-        # menu Enregistrer
 
+# menu Enregistrer
     def save(self):
         if (savedFile[1] == ""):
             self.saveAs()
