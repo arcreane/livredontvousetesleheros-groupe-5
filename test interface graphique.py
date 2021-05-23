@@ -3,11 +3,11 @@
 # -*- coding: utf-8 -*-
 
 from tkinter import *
+import tkinter.filedialog
 
 # Toutes les def
-def create():
-    win = Toplevel(fen_princ)
-
+def nouvelle_histoire():
+     = Toplevel(menunouvellehistoire)
 
 # Création de la fenêtre
 fen_princ = Tk()
@@ -29,16 +29,16 @@ menuFichier.grid(row=0,column=0)
 
 
     # Création de l'onglet Écriture d'une nouvelle histoire
-menunouvellehistoire = Button(zoneMenu, text='Nouvelle Histoire', width='20', borderwidth=2, bg='gray', activebackground='darkorange',relief = RAISED, command = create)
+menunouvellehistoire = Button(zoneMenu, text='Nouvelle Histoire', width='20', borderwidth=2, bg='gray', activebackground='darkorange',relief = RAISED, comand= nouvelle_histoire())
 menunouvellehistoire.grid(row=0,column=1)
 
 
     # Création de l'onglet Écriture d'une histoire déjà commencé
-menuhistoire = Button(zoneMenu, text="Continuer l'écriture", width='20', borderwidth=2, bg='gray', activebackground='darkorange',relief = RAISED)
+menuhistoire = Button(zoneMenu, text="Continuer l'écriture", width='20', borderwidth=2, bg='gray', activebackground='darkorange',relief = RAISED, command = tkinter.filedialog.askopenfilename)
 menuhistoire.grid(row=0,column=2)
 
     # Création de l'onglet Jouer
-menujouer = Button(zoneMenu, text='Jouer', width='20', borderwidth=2, bg='gray', activebackground='darkorange',relief = RAISED)
+menujouer = Button(zoneMenu, text='Jouer', width='20', borderwidth=2, bg='gray', activebackground='darkorange',relief = RAISED, command = tkinter.filedialog.askopenfilename)
 menujouer.grid(row=0,column=3)
 
     # Création de l'onglet Quitter
@@ -48,8 +48,8 @@ menuquitter.grid(row=0,column=9)
     # Création d'un menu défilant
 menuDeroulant1 = Menu(menuFichier)
 menuDeroulant1.add_command(label="Nouvelle histoire")
-menuDeroulant1.add_command(label="Ouvrir une histoire",)
-menuDeroulant1.add_command(label="Jouer")
+menuDeroulant1.add_command(label="Continuer l'écriture", command = tkinter.filedialog.askopenfilename)
+menuDeroulant1.add_command(label="Jouer", command = tkinter.filedialog.askopenfilename)
 menuDeroulant1.add_command(label="Quitter", command = fen_princ.destroy)
 
 
@@ -61,10 +61,10 @@ menuFichier.configure(menu=menuDeroulant1)
 frame_titre_et_sous_titre = Frame(fen_princ)
     # titre fenêtre de démarrage
 label_titre = Label(frame_titre_et_sous_titre, text="Bienvenue sur l'application", foreground="black", font=("Arial", 40))
-label_titre.pack(expand=YES)
+label_titre.pack()
 
 label_sous_titre = Label(frame_titre_et_sous_titre, text="Pour créer une nouvelle histoire, clique sur nouvelle histoire \n Pour reprendre l'écriture d'une histoire, clique sur continuer l'écriture \n Pour jouer à une histoire, clique sur jouer", foreground="black", font=("Arial", 16))
-label_sous_titre.pack(expand=YES)
+label_sous_titre.pack()
 
     # ajout boite
 frame_titre_et_sous_titre.pack(expand=YES)
