@@ -6,8 +6,7 @@ from tkinter import *
 import tkinter.filedialog
 
 # Toutes les def
-def nouvelle_histoire():
-     = Toplevel(menunouvellehistoire)
+
 
 # Création de la fenêtre
 fen_princ = Tk()
@@ -29,7 +28,7 @@ menuFichier.grid(row=0,column=0)
 
 
     # Création de l'onglet Écriture d'une nouvelle histoire
-menunouvellehistoire = Button(zoneMenu, text='Nouvelle Histoire', width='20', borderwidth=2, bg='gray', activebackground='darkorange',relief = RAISED, comand= nouvelle_histoire())
+menunouvellehistoire = Button(zoneMenu, text='Nouvelle Histoire', width='20', borderwidth=2, bg='gray', activebackground='darkorange',relief = RAISED)
 menunouvellehistoire.grid(row=0,column=1)
 
 
