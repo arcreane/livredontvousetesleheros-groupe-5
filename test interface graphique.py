@@ -3,16 +3,23 @@
 # -*- coding: utf-8 -*-
 
 from tkinter import *
+from tkinter import filedialog
 import tkinter.filedialog
-
+import os
 # Toutes les def
+def nouvellehistoire():
+    filetypes = (("py files", "*.py"), ("All files", "*.*"))
+    file_name = filedialog.askopenfilename(title="Selectionnez le fichier", filetypes=filetypes)
+    print(file_name)
+
 
 
 # Création de la fenêtre
 fen_princ = Tk()
 fen_princ.title("Le livre dont vous êtes le héros")
 fen_princ.geometry("900x600")
-fen_princ.resizable(0, 0)
+fen_princ.minsize(800, 240)
+fen_princ.resizable()
 
 
 
@@ -28,7 +35,7 @@ menuFichier.grid(row=0,column=0)
 
 
     # Création de l'onglet Écriture d'une nouvelle histoire
-menunouvellehistoire = Button(zoneMenu, text='Nouvelle Histoire', width='20', borderwidth=2, bg='gray', activebackground='darkorange',relief = RAISED)
+menunouvellehistoire = Menubutton(zoneMenu, text='Nouvelle Histoire', width='20', borderwidth=2, bg='gray', activebackground='darkorange',relief = RAISED)
 menunouvellehistoire.grid(row=0,column=1)
 
 
@@ -45,16 +52,25 @@ menuquitter = Button(zoneMenu, text='Quitter', width='20', borderwidth=2, bg='gr
 menuquitter.grid(row=0,column=9)
 
     # Création d'un menu défilant
+        #Menu déroulant du bouton fichier
 menuDeroulant1 = Menu(menuFichier)
 menuDeroulant1.add_command(label="Nouvelle histoire")
 menuDeroulant1.add_command(label="Continuer l'écriture", command = tkinter.filedialog.askopenfilename)
 menuDeroulant1.add_command(label="Jouer", command = tkinter.filedialog.askopenfilename)
 menuDeroulant1.add_command(label="Quitter", command = fen_princ.destroy)
 
+        #Menu déroulant du bouton nouvelle histoire
+menuDeroulant2 = Menu(menunouvellehistoire)
+menuDeroulant2.add_command(label="5 Chapitres",command = tkinter.filedialog.askopenfilename() )
+menuDeroulant2.add_command(label="6 Chapitres")
+menuDeroulant2.add_command(label="7 Chapitres")
+menuDeroulant2.add_command(label="8 Chapitres")
+menuDeroulant2.add_command(label="9 Chapitres")
+menuDeroulant2.add_command(label="10 Chapitres")
 
-    # Attribution du menu déroulant au menu Affichage
+    # Attribution du menu déroulant aux différents menus
 menuFichier.configure(menu=menuDeroulant1)
-
+menunouvellehistoire.configure(menu=menuDeroulant2)
 # 2 - Coeur de la fenêtre
     # boite
 frame_titre_et_sous_titre = Frame(fen_princ)

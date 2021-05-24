@@ -1,13 +1,12 @@
-from tkinter import *
+import tkinter as tk
 
+app = tk.Tk()
+app.geometry("400x200")
 
-def faireApparaitreLeToplevel():
-    top = Toplevel(root)
-    lab = Label(top, text="Ce soir je vais manger des frites")
-    lab.pack()
+entryExample = tk.Entry(app)
+entryExample.place(x = 10,
+        y = 10,
+        width=200,
+        height=100)
 
-
-root = Tk()
-go = Button(root, text="lancer", command=faireApparaitreLeToplevel)
-go.pack()
-root.mainloop()
+app.mainloop()
