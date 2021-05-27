@@ -4,17 +4,8 @@ import tkinter.filedialog
 import os
 import glob
 import tkinter as tk
-window=tk.Tk()
-window.minsize(650,260)
-window.title('LDVELH')
-window.columnconfigure(0, weight=1)
-window.rowconfigure(0, weight=1)
 
-frame=tk.Frame(window)
-frame.grid(row=0, column=0, sticky="NESW")
-window.geometry("1300x720")
-
-
+LARGE_FONT = ("Verdana", 12)
 def ishistoire(path):
     listelocate = []
     listelocate = glob.glob(path + "/*.json")
@@ -36,75 +27,18 @@ def listlivres():
             retour.append((text_files[i].replace("content.json", "")))
     return(retour)
 
-def accueil():
-    tk.Label(text= "Bienvenue dans Le Jeu Dont Vous Êtes Le Héros : \n"
-                   "Sélectionenez votre histoire dans la liste ou selectionner autre pour choisir un autre emplacement sur votre disque \n\n\n\n")\
-        .grid(column = 0, row = 0, sticky = "EW")
-
-    listeCombo.current(0)
-    listeCombo.grid(row=1, column=0 , sticky = "N")
-    tk.Label(text= "\n \n\n\n\n").grid(column = 0, row = 2, sticky = "EW")
-    listeCombo.bind("<<ComboboxSelected>>", action)
-
-
-
-printlist = []
-ndlist = []
-
-
-
-#t = Table(window,ndlist)
-#Initialisation des variables tkinter
-listeFichiers = listlivres()
-listeFichiers.append("autre")
-listeCombo = ttk.Combobox(window, values=listeFichiers)
-
-def action(event):
-    select = listeCombo.get()
-    if select == "autre":
-        text_files = tk.filedialog.askdirectory(title = "Selectionnez un dossier", mustexist = True, initialdir = os.path.expanduser('~/Documents'))
-        if ishistoire(text_files):
-            play(text_files)
-    else :
-        play(select)
-
-
-
-#Jeu
-
-def play(chemin):
-    frame.destroy()
-    with open(chemin+"/persos.json") as f:
-      persos = json.load(f)
-    with open(chemin+"/specs.json") as f:
-      specs = json.load(f)
-    with open(chemin+"/content.json") as f:
-      content = json.load(f)
-    print("blabla")
-    for widget in window.winfo_children():
-        widget.destroy
-accueil()
-import tkinter as tk
-
-LARGE_FONT = ("Verdana", 12)
-
-
 class SeaofBTCapp(tk.Tk):
 
     def __init__(self, *args, **kwargs):
         tk.Tk.__init__(self, *args, **kwargs)
         container = tk.Frame(self)
 
-        container.pack(side="top", fill="both", expand=True)
+
 
         container.grid_rowconfigure(0, weight=1)
         container.grid_columnconfigure(0, weight=1)
 
         self.frames = {}
-        window.minsize(650, 260)
-        window.title('LDVELH')
-        window.columnconfigure(0, weight=1)
-        window.rowconfigure(0, weight=1)
 
         for F in (StartPage, PageOne, PageTwo):
             frame = F(container, self)
@@ -124,12 +58,12 @@ class StartPage(tk.Frame):
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
-
-
         tk.Label(text="Bienvenue dans Le Jeu Dont Vous Êtes Le Héros : \n"
                       "Sélectionenez votre histoire dans la liste ou selectionner autre pour choisir un autre emplacement sur votre disque \n\n\n\n") \
             .grid(column=0, row=0, sticky="EW")
-
+        listeFichiers = listlivres()
+        listeFichiers.append("autre")
+        listeCombo = ttk.Combobox(tk.Frame, values=listeFichiers)
         listeCombo.current(0)
         listeCombo.grid(row=1, column=0, sticky="N")
         tk.Label(text="\n \n\n\n\n").grid(column=0, row=2, sticky="EW")
@@ -170,5 +104,3 @@ class PageTwo(tk.Frame):
 
 window = SeaofBTCapp()
 window.mainloop()
-#window.mainloop()
-
