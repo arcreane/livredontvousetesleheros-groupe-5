@@ -31,7 +31,7 @@ zoneMenu.pack(fill=X)
 
     # Création de l'onglet Fichier
 menuFichier = Menubutton(zoneMenu, text='Fichier', width='20', borderwidth=2, bg='gray', activebackground='darkorange',relief = RAISED)
-menuFichier.grid(row=0,column=0)
+menuFichier.grid(row=0, column=0)
 
 
     # Création de l'onglet Écriture d'une nouvelle histoire
