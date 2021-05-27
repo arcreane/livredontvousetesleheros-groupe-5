@@ -37,10 +37,10 @@ def create_window(window, text_label):
 
 
 # Création de la fenêtre
-jeu = tk.Tk()
-jeu.winfo_screenwidth()
-jeu.winfo_screenheight()
-jeu.geometry("900x600")
+window = tk.Tk()
+window.winfo_screenwidth()
+window.winfo_screenheight()
+window.geometry("900x600")
 
 
 
@@ -53,7 +53,7 @@ o1.pack()
 
     #Onglet 2
 o2 = tk.Frame()  # Ajout de l'onglet 2
-o2.pack(expand=YES)
+o2.pack()
 
 
 
@@ -62,7 +62,7 @@ o2.pack(expand=YES)
 #Les Frames
     #Frame o1
 etiquette = tk.Label(o1, text='Votre histoire :')
-etiquette.pack(padx=5, pady=5, side=TOP)
+etiquette.pack(padx=5, pady=5,)
 etiquette.place(x=5, y=00)
 
 scrollbar = tk.Scrollbar(o1)
@@ -71,13 +71,13 @@ scrollbar.config(command=texte_histoire.yview)
 
 texte_histoire.place(x=0, y=0, height=50, width=50)
 texte_histoire.pack(padx=5, pady=20)
-scrollbar.pack(side=RIGHT, fill=Y)
+scrollbar.pack()
 
 
 #Les boutons
     #Boutons onglet 1
 tk.Button(o1, text="Enregistrer").pack()
-tk.Button(o1, text='Quitter', command=jeu.destroy).pack()
+tk.Button(o1, text='Quitter', command=window.destroy).pack()
     #Boutons onglet 2
 tk.Button(o2, text='En attente', command=None).pack()
 
@@ -85,7 +85,7 @@ tk.Button(o2, text='En attente', command=None).pack()
 zone_reliant_les_chapitres_entre_eux = tk.Frame(o1, borderwidth=1,)
 zone_reliant_les_chapitres_entre_eux.pack(padx=10,pady=10)
 #Frame qui configure vers quel chapitre ca va
-menu_chapitre_suivant = tk.Menubutton(zone_reliant_les_chapitres_entre_eux, text='Relier aux chapitre...', width='20', borderwidth=2, bg='gray', activebackground='darkorange',relief = RAISED)
+menu_chapitre_suivant = tk.Menubutton(zone_reliant_les_chapitres_entre_eux, text='Relier aux chapitre...', width='20', borderwidth=2, bg='gray', activebackground='darkorange',)
 menu_chapitre_suivant.pack()
 menu_deroulant_chapitre_suivant = tk.Menu(menu_chapitre_suivant)
 menu_deroulant_chapitre_suivant.add_command(label="n°1")
@@ -101,4 +101,4 @@ choix2 = tk.Radiobutton(zone_reliant_les_chapitres_entre_eux, text="Avoir des ja
 
 
 
-jeu.mainloop()
+window.mainloop()
