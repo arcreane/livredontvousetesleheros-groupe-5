@@ -7,11 +7,13 @@ from tkinter import filedialog
 import tkinter.filedialog
 import os
 # Toutes les def
-def nouvellehistoire():
-    filetypes = (("py files", "*.py"), ("All files", "*.*"))
-    file_name = filedialog.askopenfilename(title="Selectionnez le fichier", filetypes=filetypes)
-    print(file_name)
 
+def create():
+    win = Toplevel(fen_princ)
+    win.update()
+    filetypes = (("text files", "*.txt"),("All files", "*.*"))
+    file_name = filedialog.askopenfilename(initialdir = "/",title = "Selectionnez le fichier",filetypes = filetypes)
+    print(file_name)
 
 
 # Création de la fenêtre
