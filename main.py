@@ -2,10 +2,45 @@ import json
 import tkinter.ttk as ttk
 import tkinter.filedialog
 import os
+
 import glob
 import tkinter as tk
 
-LARGE_FONT = ("Verdana", 12)
+
+
+window=tk.Tk()
+
+window.minsize(650,260)
+window.title('LDVELH')
+
+content= ""
+frame1 = tk.Frame(window)
+frame2 = tk.Frame(window)
+frame3 = tk.Frame(window)
+
+#frame1.grid(row=3, column=0, sticky="NESW")
+window.geometry("1300x720")
+def load(chemin):
+    global persos, specs,content
+    with open(chemin + "/persos.json") as f:
+        persos = json.load(f)
+    with open(chemin + "/specs.json") as f:
+        specs = json.load(f)
+    with open(chemin + "/content.json") as f:
+        content = json.load(f)
+def boutondechoix(content, i,chemin):
+    boutons = []
+    for o in range(len(content[str(i)][3])):
+        boutons.append(tk.Button(frame3, text=content[str(i)][3][o][1], command=lambda x=content[str(i)][3][o][0]: choixdelacarte(x,chemin)))
+    return(boutons)
+def choixdelacarte(x,chemin):
+
+    play(chemin,x)
+
+def choixduperso(x):
+    global perso
+    perso = x
+
 def ishistoire(path):
     listelocate = []
     listelocate = glob.glob(path + "/*.json")
@@ -21,86 +56,83 @@ def listlivres():
     listefichiers = []
     text_files = glob.glob(path + "/**/content.json", recursive = True)
     for i in range(0, len(text_files)):
-        listelocate =[]
         listelocate = glob.glob((text_files[i].replace("content.json", "")+"*.json"), recursive = True)
         if text_files[i]in listelocate and text_files[i].replace("content.json", "")+"specs.json".replace("/","\\")in listelocate and text_files[i].replace("content.json", "")+"persos.json".replace("/","\\") in listelocate :
             retour.append((text_files[i].replace("content.json", "")))
     return(retour)
 
-class SeaofBTCapp(tk.Tk):
+def accueil():
+    title_label = tk.Label(frame1, text= "Bienvenue dans Le Jeu Dont Vous Êtes Le Héros : \n"
+                   "Sélectionenez votre histoire dans la liste ou selectionner autre pour choisir un autre emplacement sur votre disque \n\n\n\n")
+        #.grid(column = 1, row = 0, sticky = 'E'+'W')
 
-    def __init__(self, *args, **kwargs):
-        tk.Tk.__init__(self, *args, **kwargs)
-        container = tk.Frame(self)
+    title_label.config(anchor="center")
+    title_label.pack(fill="y")
 
+    listeCombo.current(0)
+    listeCombo.pack(fill="y")
 
-
-        container.grid_rowconfigure(0, weight=1)
-        container.grid_columnconfigure(0, weight=1)
-
-        self.frames = {}
-
-        for F in (StartPage, PageOne, PageTwo):
-            frame = F(container, self)
-
-            self.frames[F] = frame
-
-            frame.grid(row=0, column=0, sticky="nsew")
-
-        self.show_frame(StartPage)
-
-    def show_frame(self, cont):
-        frame = self.frames[cont]
-        frame.tkraise()
+    #tk.Label(frame1, text= "\n \n\n\n\n").grid(column = 0, row = 2, sticky = "EW")
+    listeCombo.bind("<<ComboboxSelected>>", action)
+    frame1.pack(expand = "True")
 
 
-class StartPage(tk.Frame):
-
-    def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
-        tk.Label(text="Bienvenue dans Le Jeu Dont Vous Êtes Le Héros : \n"
-                      "Sélectionenez votre histoire dans la liste ou selectionner autre pour choisir un autre emplacement sur votre disque \n\n\n\n") \
-            .grid(column=0, row=0, sticky="EW")
-        listeFichiers = listlivres()
-        listeFichiers.append("autre")
-        listeCombo = ttk.Combobox(tk.Frame, values=listeFichiers)
-        listeCombo.current(0)
-        listeCombo.grid(row=1, column=0, sticky="N")
-        tk.Label(text="\n \n\n\n\n").grid(column=0, row=2, sticky="EW")
-        listeCombo.bind("<<ComboboxSelected>>", action)
 
 
-class PageOne(tk.Frame):
 
-    def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
-        label = tk.Label(self, text="Page One!!!", font=LARGE_FONT)
-        label.pack(pady=10, padx=10)
-
-        button1 = tk.Button(self, text="Back to Home",
-                            command=lambda: controller.show_frame(StartPage))
-        button1.pack()
-
-        button2 = tk.Button(self, text="Page Two",
-                            command=lambda: controller.show_frame(PageTwo))
-        button2.pack()
+#Initialisation des variables tkinter
+listeFichiers = listlivres()
+listeFichiers.append("autre")
+listeCombo = ttk.Combobox(frame1, values=listeFichiers)
 
 
-class PageTwo(tk.Frame):
-
-    def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
-        label = tk.Label(self, text="Page Two!!!", font=LARGE_FONT)
-        label.pack(pady=10, padx=10)
-
-        button1 = tk.Button(self, text="Back to Home",
-                            command=lambda: controller.show_frame(StartPage))
-        button1.pack()
-
-        button2 = tk.Button(self, text="Page One",
-                            command=lambda: controller.show_frame(PageOne))
-        button2.pack()
+def action(event):
+    select = listeCombo.get()
+    if select == "autre":
+        text_files = tk.filedialog.askdirectory(title = "Selectionnez un dossier", mustexist = True, initialdir = os.path.expanduser('~/Documents'))
+        if ishistoire(text_files):
+            frame1.pack_forget()
+            play(text_files)
+    else :
+        frame1.pack_forget()
+        play(select)
 
 
-window = SeaofBTCapp()
+#Jeu
+
+def play(chemin,i=0):
+    global frame2, frame3, perso
+    frame2.destroy()
+    frame3.destroy()
+    frame2 = tk.Frame(window)
+    frame3 = tk.Frame(window)
+
+    if i == 0 :
+        load(chemin)
+    if content[str(i)][4] == "H" :
+        boutonsduchp = boutondechoix(content, i,chemin)
+        title_label = tk.Label(frame2, text = content[str(i)][0])
+        title_label.pack(side="left")
+        for choix in range(len(boutonsduchp)):
+            boutonsduchp[choix].pack(fill="x")
+            frame3.pack(side= "bottom",padx=20, pady=20,expand= "yes")
+        frame2.pack(padx=20, pady=20,expand= "yes")
+    elif content[str(i)][4] == "P" :
+        boutons = []
+        print(len(persos))
+        for o in range(0,len(persos)):
+            boutons = []
+            print(list(persos.keys())[o])
+            boutons.append(tk.Button(frame3, text=list(persos.keys())[o],
+                                     command=lambda x=content[str(i)][3][o][0]: choixdelacarte(x, chemin)))
+            frame3.pack(side="bottom", padx=20, pady=20, expand="yes")
+        for choix in range(len(boutons)):
+            boutons[choix].pack(fill="x")
+            frame3.pack(side= "bottom",padx=20, pady=20,expand= "yes")
+        frame2.pack(padx=20, pady=20,expand= "yes")
+
+
+
+accueil()
+#play("C:/Users/maxim/Documents/GitHub/livredontvousetesleheros-groupe-5/livres/livre 1")
 window.mainloop()

@@ -13,24 +13,24 @@ def afficheZoneSaisie():
     print('Votre mot de passe secret est : '+zoneSaisie)
     # return inutile : modification d'une variable globale
 def clean_exit():
-    root.destroy()
+    window.destroy()
 
 
-def alternate_window(is_in_root, is_in_window, window):
+def alternate_window(is_in_window, is_in_root, window):
     def alternate_processing():
-        if is_in_root and not is_in_window:
-            root.withdraw()
+        if is_in_root and not is_in_root:
+            window.withdraw()
             window.deiconify()
         else:
             window.withdraw()
-            root.deiconify()
+            window.deiconify()
 
     return alternate_processing
 
 
 def create_window(window, text_label):
     label = tk.Label(window, text=text_label)
-    button = tk.Button(window, text="Revenir vers root", command=alternate_window(False, True, window))
+    button = tk.Button(window, text="Revenir vers window", command=alternate_window(False, True, window))
     label.grid(column=0, row=0)
     button.grid(column=0, row=1)
     window.protocol("WM_DELETE_WINDOW", clean_exit)

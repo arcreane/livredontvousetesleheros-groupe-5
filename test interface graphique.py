@@ -7,10 +7,10 @@ from tkinter import filedialog
 import tkinter.filedialog
 import os
 # Toutes les def
-def nouvellehistoire():
+"""def nouvellehistoire():
     filetypes = (("py files", "*.py"), ("All files", "*.*"))
     file_name = filedialog.askopenfilename(title="Selectionnez le fichier", filetypes=filetypes)
-    print(file_name)
+    print(file_name)"""
 
 
 
@@ -56,17 +56,13 @@ menuquitter.grid(row=0,column=9)
 menuDeroulant1 = Menu(menuFichier)
 menuDeroulant1.add_command(label="Nouvelle histoire")
 menuDeroulant1.add_command(label="Continuer l'écriture", command = tkinter.filedialog.askopenfilename)
-menuDeroulant1.add_command(label="Jouer", command = tkinter.filedialog.askopenfilename)
+menuDeroulant1.add_command(label="Jouer", command = menujouer)
 menuDeroulant1.add_command(label="Quitter", command = fen_princ.destroy)
 
         #Menu déroulant du bouton nouvelle histoire
 menuDeroulant2 = Menu(menunouvellehistoire)
 menuDeroulant2.add_command(label="5 Chapitres",command = tkinter.filedialog.askopenfilename() )
-menuDeroulant2.add_command(label="6 Chapitres")
-menuDeroulant2.add_command(label="7 Chapitres")
-menuDeroulant2.add_command(label="8 Chapitres")
-menuDeroulant2.add_command(label="9 Chapitres")
-menuDeroulant2.add_command(label="10 Chapitres")
+
 
     # Attribution du menu déroulant aux différents menus
 menuFichier.configure(menu=menuDeroulant1)

@@ -1,0 +1,6 @@
+{
+  "0" : ["Cependant, le petit chaperon rouge a un très petit sac et ne peut prendre qu’un seul objet.\nQue souhaitez-vous que le petit chaperon rouge prenne dans son sac ?\nLe beurre pour faire plaisir à sa mère\nSon téléphone car elle ne peut pas se passer de ses amis\nUn couteau car elle a peur de sortir sans défense\n\nDe plus, à quelle heure souhaitez-vous que le PCR se rende chez sa grand-mère",0,0,[[1, "14H"],[2, "18H"]],"H", "False"],
+  "1" : ["Blabla paragraphe 2",0,0,[[1, "Sortir"],[2, "Chercher la telecommande"],[3, "prout"]],"H", "False"],
+  "2" : ["Blablaparagraphe 3",0,0,[[1, "Sortir"],[2, "Chercher la telecommande"],[3, "prout"]],"H", "False"],
+  "3" : ["Blabla paragraphe 4",0,0,[[1, "Sortir"],[2, "Chercher la telecommande"],[3, "prout"]],"H", "True"]
+}
