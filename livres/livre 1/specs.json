@@ -1,3 +1,5 @@
 {
-  "length":  10,
-  "cappas": ["adaptation", "connaissances", "stress", "repos"]}
+  "cappas": ["adaptation", "connaissances", "stress", "repos"],
+  "fini": 1,
+  "objets":{"1":["iPad",[0,0,0,0]],"2":["iPhone",[0,0,0,0]],"3":["Macbook",[0,0,0,0]],"4":["iPencil",[0,0,0,0]],"5":["Courage",[0,0,0,0]]}
+  }

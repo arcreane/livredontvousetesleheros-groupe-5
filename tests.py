@@ -1,12 +1,7 @@
-import tkinter
+from tkinter import *
 
-
-top = tkinter.Tk()
-
-def helloCallBack():
-   tkMessageBox.showinfo( "Hello Python", "Hello World")
-
-B = tkinter.Button(top, text ="Hello", command = helloCallBack)
-
-B.pack()
-top.mainloop()
+wd = Tk()
+wd.config(height=500, width=500)
+can = Canvas(wd, bg = 'red', height=100, width=100)
+can.place(relx=0.5, rely=0.5, anchor=CENTER)
+wd.mainloop()

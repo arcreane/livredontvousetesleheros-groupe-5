@@ -1,6 +1,7 @@
 import json
 import tkinter.ttk as ttk
 import tkinter.filedialog
+import tkinter.font as tkFont
 import os
 
 import glob
@@ -111,7 +112,9 @@ def play(chemin,i=0):
         load(chemin)
     if content[str(i)][4] == "H" :
         boutonsduchp = boutondechoix(content, i,chemin)
-        title_label = tk.Label(frame2, text = content[str(i)][0])
+        titre_label = tk.Label(frame2, text = content[str(i)][0][0])
+        titre_label.pack(side="left")
+        title_label = tk.Label(frame2, text = content[str(i)][0][1])
         title_label.pack(side="left")
         for choix in range(len(boutonsduchp)):
             boutonsduchp[choix].pack(fill="x")
@@ -119,6 +122,11 @@ def play(chemin,i=0):
         frame2.pack(padx=20, pady=20,expand= "yes")
     elif content[str(i)][4] == "P" :
         boutons = []
+        policeTitre = tkFont.Font(family="Lucida Grande", size=20)
+        titre_label = tk.Label(frame2, text = content[str(i)][0][0],font=policeTitre)
+        titre_label.pack(side="top")
+        title_label = tk.Label(frame2, text = content[str(i)][0][1])
+        title_label.pack()
         print(len(persos))
         for o in range(0,len(persos)):
             boutons = []

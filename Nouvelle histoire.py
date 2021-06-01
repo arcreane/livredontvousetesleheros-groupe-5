@@ -38,8 +38,7 @@ def create_window(window, text_label):
 
 # Création de la fenêtre
 window = tk.Tk()
-window.winfo_screenwidth()
-window.winfo_screenheight()
+
 window.geometry("900x600")
 
 
@@ -95,9 +94,19 @@ value = tk.StringVar()
 choix1 = tk.Radiobutton(zone_reliant_les_chapitres_entre_eux, text="Avoir des dents en bois", variable=value, value=1)
 choix2 = tk.Radiobutton(zone_reliant_les_chapitres_entre_eux, text="Avoir des jambes en mousse", variable=value, value=2)
 
+#Bouton pour ajouter un chapitre
 
+"""o3 = tk.Frame(window)
+o3.pack(side = "left")
 
+creationdechapitre = tk.Button(o3,width = 30)
+creationdechapitre.pack()
+"""
 
+bottomframe = tk.Frame(window)
+bottomframe.pack( side = tk.BOTTOM )
+blackbutton = tk.Button(bottomframe, text="Black", fg="black")
+blackbutton.pack( side = tk.BOTTOM)
 
 
 
