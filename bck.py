@@ -12,7 +12,7 @@ import tkinter as tk
 
 window=tk.Tk()
 
-window.minsize(650,260)
+window.minsize(650,400)
 window.title('LDVELH')
 
 content= ""
@@ -22,13 +22,12 @@ frame3 = tk.Frame(window)
 
 #frame1.grid(row=3, column=0, sticky="NESW")
 window.geometry("1300x720")
-def alertwindow():
-    MsgBox = tk.messagebox.askquestion('Conflit de fichiers', 'Êtes vous sur de vouloir écraser un livre déjà exisatnt ?',
-                                       icon='warning')
-    if MsgBox == 'yes':
-        print("allesgut")
-    else:
-        tk.messagebox.showinfo('Return', 'You will now return to the application screen')
+def alertwindow(motif):
+    if motif == "conflifichiers" :
+        MsgBox = tk.messagebox.askquestion('Conflit de fichiers', 'Êtes vous sur de vouloir écraser un livre déjà exisatnt ?',
+                                           icon='warning')
+        if MsgBox == 'yes':
+            print("allesgut")
 def load(chemin):
     global persos, specs,content
     with open(chemin + "/persos.json") as f:
@@ -104,18 +103,24 @@ def action(event):
             print("proutf")
             newbook(text_files)
         else :
-            alertwindow()
+            alertwindow("conflifichiers")
     else :
         print("prout2")
         frame1.pack_forget()
 
 def ajouterchapitre():
-    global mylist
+    global chaplist
     content[str(len(content))] = [[f"Titre du chapitre {str(len(content)+1)}","Texte du chapitre"],0,0,[[],"C", "False"]]
-    mylist.delete(0, tk.END)
+    chaplist.delete(0, tk.END)
     for line in range(len(content)):
-        mylist.insert(tk.END, content[str(line)][0][0])
-
+        chaplist.insert(tk.END, content[str(line)][0][0])
+def editerchapitre():
+    global chaplist
+    try :
+        select = chaplist.get(chaplist.curselection())
+        print(select)
+    except:
+        print("No selected values")
 #Éditeur
 def newbook(chemin):
     f = open(chemin + "/specs.json", "w")
@@ -123,8 +128,15 @@ def newbook(chemin):
     f = open(chemin + "/content.json", "w")
     editor3000(chemin)
 
-def editor3000(chemin):
-    global frame2, frame3, perso, mylist
+def destroyframes(framelist):
+    for i in range(0,len(framelist)):
+        try:
+            framelist[i].destroy()
+        except:
+            print("nop")
+
+def editor3000(chemin,chapitre = 0):
+    global frame2, frame3, perso, chaplist
     frame2.destroy()
     frame3.destroy()
     load(chemin)
@@ -135,9 +147,9 @@ def editor3000(chemin):
     leftcolumn = tk.Frame(frameleft)
     rightcolumn= tk.Frame(frameright)
     frametopcenter = tk.Frame(framecenter)
+    framebottomcenter = tk.Frame(framecenter)
 
-    def actionlistbox(event):
-        print(mylist.curselection())
+
 
     frameleft.pack(side="left", fill =tk.Y)
 
@@ -161,8 +173,10 @@ def editor3000(chemin):
               "Combat": "C"}
 
     for (text, value) in values.items():
-        tk.Radiobutton(rightcolumn, text=text, variable=v,
-                    value=value).pack(side=tk.TOP, ipady=5, fill = tk.Y)
+        boutons = tk.Radiobutton(rightcolumn, text=text, variable=v,
+                    value=value,tristatevalue=0)
+        boutons.select()
+        boutons.pack(side=tk.TOP, ipady=5, fill = tk.Y)
 
     frameright.pack(side = tk.RIGHT, fill = tk.Y)
 
@@ -172,19 +186,24 @@ def editor3000(chemin):
     myscroll = tk.Scrollbar(leftcolumn)
     myscroll.pack(side=tk.RIGHT, fill=tk.Y)
 
-    mylist = tk.Listbox(leftcolumn, yscrollcommand=myscroll.set)
+    chaplist = tk.Listbox(leftcolumn, yscrollcommand=myscroll.set)
     for line in range(len(content)):
-        mylist.insert(tk.END, content[str(line)][0][0])
-        mylist.configure( selectmode = tk.SINGLE)
-    mylist.pack(side=tk.TOP, fill=tk.Y)
-    mylist.bind("<<ListBoxSelected>>", actionlistbox)
+        chaplist.insert(tk.END, content[str(line)][0][0])
+        chaplist.configure( selectmode = tk.SINGLE)
+    chaplist.pack(side=tk.TOP, fill=tk.Y)
 
     addchapitre = tk.Button(leftcolumn, text= "Ajouter un chapitre", command= ajouterchapitre)
-    addchapitre.place()
     addchapitre.pack(fill=tk.X)
+    editchapitre = tk.Button(leftcolumn, text= "Editer le chapitre", command= editerchapitre)
+    editchapitre.pack(fill=tk.X)
+
     leftcolumn.pack(side = tk.TOP, fill=tk.Y)
     frameleft.pack(side =tk.LEFT, fill=tk.Y)
     framecenter.pack( fill = tk.BOTH)
+
+    titreduchapitre = tk.Entry(frametopcenter)
+    titreduchapitre.insert(1,content[str(chapitre)][0][0])
+    titreduchapitre.pack(fill = tk.X, padx = 10)
 
     scrollbar3 = tk.Scrollbar(frametopcenter)
     texte_histoire = tk.Text(frametopcenter, font=("Arial", 10), width=50, yscrollcommand=scrollbar3.set)
@@ -193,17 +212,32 @@ def editor3000(chemin):
 
     texte_histoire.place(height=50, width=50)
     scrollbar3.pack(side = tk.RIGHT, fill=tk.Y)
-    texte_histoire.pack(side=tk.TOP, fill=tk.BOTH)
+    texte_histoire.insert(1.0,content[str(chapitre)][0][1])
+    texte_histoire.pack(side=tk.TOP, fill=tk.BOTH, padx = 10)
 
     frametopcenter.pack(fill = tk.BOTH)
 
     def get_entry_text():
-        print(texte_histoire.get(1,tk.END))
+        print(texte_histoire.get(1.0,"end-1c"))
 
 
     button = tk.Button(framecenter, text='get entry', command=get_entry_text)
     button.pack(pady=10)
 
+
+
+
+    redirchap1 = tk.Entry(framebottomcenter)
+    redirchap2 = tk.Entry(framebottomcenter)
+    redirchap3 = tk.Entry(framebottomcenter)
+    redirchap1.insert(1,f"{content[str(chapitre)][3][0][0]}" )
+    redirchap2.insert(1,f"{content[str(chapitre)][3][1][0]}" )
+    redirchap3.insert(1,f"{content[str(chapitre)][3][2][0]}" )
+    redirchap1.pack()
+    redirchap2.pack()
+    redirchap3.pack()
+    framebottomcenter.pack()
+    framecenter.pack()
 
 
 
