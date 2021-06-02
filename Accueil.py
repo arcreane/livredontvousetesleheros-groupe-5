@@ -1,6 +1,5 @@
 from tkinter import *
-import main
-import Nouveaulivre
+import os
 
 window = Tk()
 window.title("Le livre dont vous êtes le héros")
@@ -11,6 +10,10 @@ frame = Frame(window)
 
 frame.pack(side= TOP)
 
+def startbck():
+    os.system('python bck.py')
+def startplay():
+    os.system('python main.py')
 
 
 frame = Frame(window)
@@ -20,13 +23,13 @@ bluebutton.pack()
 
 frame2 = Frame(window)
 frame2.place(relx=0.45, rely=0.5, anchor=CENTER)
-greenbutton = Button(frame2, text="Jouer", command= main)
+greenbutton = Button(frame2, text="Jouer", command= startplay)
 greenbutton.pack()
 
 frame3 = Frame(window)
 frame3.place(relx=0.55, rely=0.5, anchor=CENTER)
 
-bluebutton = Button(frame3, text="Éditer", command=Nouveaulivre)
+bluebutton = Button(frame3, text="Éditer", command=startbck)
 bluebutton.pack()
 
 

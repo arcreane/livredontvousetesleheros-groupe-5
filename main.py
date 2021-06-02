@@ -111,9 +111,10 @@ def play(chemin,i=0):
     if i == 0 :
         load(chemin)
     if content[str(i)][4] == "H" :
+        policeTitre = tkFont.Font(family="Lucida Grande", size=20)
         boutonsduchp = boutondechoix(content, i,chemin)
-        titre_label = tk.Label(frame2, text = content[str(i)][0][0])
-        titre_label.pack(side="left")
+        titre_label = tk.Label(frame2, text = content[str(i)][0][0],font=policeTitre)
+        titre_label.pack(side="top")
         title_label = tk.Label(frame2, text = content[str(i)][0][1])
         title_label.pack(side="left")
         for choix in range(len(boutonsduchp)):
@@ -141,6 +142,6 @@ def play(chemin,i=0):
 
 
 
-accueil()
-#play("C:/Users/maxim/Documents/GitHub/livredontvousetesleheros-groupe-5/livres/livre 1")
+#accueil()
+play("C:/Users/maxim/Documents/GitHub/livredontvousetesleheros-groupe-5/livres/livre 1")
 window.mainloop()

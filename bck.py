@@ -41,9 +41,7 @@ def boutondechoix(content, i,chemin):
     for o in range(len(content[str(i)][3])):
         boutons.append(tk.Button(frame3, text=content[str(i)][3][o][1], command=lambda x=content[str(i)][3][o][0]: choixdelacarte(x,chemin)))
     return(boutons)
-def choixdelacarte(x,chemin):
 
-    play(chemin,x)
 
 def choixduperso(x):
     global perso
@@ -106,7 +104,8 @@ def action(event):
             alertwindow("conflifichiers")
     else :
         print("prout2")
-        frame1.pack_forget()
+        editor3000(select)
+        frame1.destroy()
 
 def ajouterchapitre():
     global chaplist
@@ -114,13 +113,16 @@ def ajouterchapitre():
     chaplist.delete(0, tk.END)
     for line in range(len(content)):
         chaplist.insert(tk.END, content[str(line)][0][0])
-def editerchapitre():
-    global chaplist
-    try :
-        select = chaplist.get(chaplist.curselection())
-        print(select)
-    except:
-        print("No selected values")
+def editerchapitre(chemin,chapitreactuel, chapitreaemmener):
+    global chaplist,frameleft, framecenter,frameright,leftcolumn,rightcolumn,frametopcenter,framebottomcenter
+    save(chapitreactuel)
+    for line in content:
+        if chapitreaemmener == content[str(line)][0][0] :
+            valuechap = line
+    destroyframes()
+    editor3000(chemin, int(valuechap))
+
+
 #Éditeur
 def newbook(chemin):
     f = open(chemin + "/specs.json", "w")
@@ -128,7 +130,24 @@ def newbook(chemin):
     f = open(chemin + "/content.json", "w")
     editor3000(chemin)
 
-def destroyframes(framelist):
+def save(i):
+    global titreduchapitre, texte_histoire,v,  redirchap1text, redirchap2text, redirchap3text,redirchap1,redirchap2,redirchap3
+    content[str(i)]=[[titreduchapitre.get(),texte_histoire.get(1.0, tk.END+"-1c")],0,0,[[redirchap1.get(), redirchap1text.get()],[redirchap2.get(), redirchap2text.get()],[redirchap3.get(), redirchap3text.get()]],v.get(), "False"]
+
+
+def writefiles(chemin, chapencours):
+    save(chapencours)
+    with open( chemin + "/content.json", 'w') as outfile:
+        json.dump(content, outfile)
+    with open( chemin + "/persos.json", 'w') as outfile:
+        json.dump(persos, outfile)
+    with open( chemin + "/specs.json", 'w') as outfile:
+        json.dump(specs, outfile)
+    print("prout1")
+
+def destroyframes():
+    global frameleft, framecenter,frameright,leftcolumn,rightcolumn,frametopcenter,framebottomcenter
+    framelist = [frameleft, framecenter,frameright,leftcolumn,rightcolumn,frametopcenter,framebottomcenter]
     for i in range(0,len(framelist)):
         try:
             framelist[i].destroy()
@@ -136,12 +155,11 @@ def destroyframes(framelist):
             print("nop")
 
 def editor3000(chemin,chapitre = 0):
-    global frame2, frame3, perso, chaplist
+    global frame2, frame3, perso, chaplist, titreduchapitre, texte_histoire,v,  redirchap1text, redirchap2text, redirchap3text,redirchap1,redirchap2,redirchap3,frameleft, framecenter,frameright,leftcolumn,rightcolumn,frametopcenter,framebottomcenter
     frame2.destroy()
     frame3.destroy()
     load(chemin)
     frameleft = tk.Frame(window)
-    frameright = tk.Frame(window)
     framecenter= tk.Frame(window)
     frameright= tk.Frame(window)
     leftcolumn = tk.Frame(frameleft)
@@ -166,17 +184,23 @@ def editor3000(chemin,chapitre = 0):
 
 
 
-    v = tk.StringVar(rightcolumn, "1")
+    v = tk.StringVar(None, "C")
+
+    combat = ttk.Radiobutton(
+        frameright,
+        text='Combat',
+        variable=v,
+        value='C')
+    histoire = ttk.Radiobutton(
+        frameright,
+        text='Histoire',
+        variable=v,
+        value='H')
 
 
-    values = {"Histoire": "H",
-              "Combat": "C"}
-
-    for (text, value) in values.items():
-        boutons = tk.Radiobutton(rightcolumn, text=text, variable=v,
-                    value=value,tristatevalue=0)
-        boutons.select()
-        boutons.pack(side=tk.TOP, ipady=5, fill = tk.Y)
+    combat.pack(side=tk.TOP, ipady=5, fill = tk.Y)
+    histoire.pack(side=tk.TOP, ipady=5, fill = tk.Y)
+    v.set("C")
 
     frameright.pack(side = tk.RIGHT, fill = tk.Y)
 
@@ -194,7 +218,7 @@ def editor3000(chemin,chapitre = 0):
 
     addchapitre = tk.Button(leftcolumn, text= "Ajouter un chapitre", command= ajouterchapitre)
     addchapitre.pack(fill=tk.X)
-    editchapitre = tk.Button(leftcolumn, text= "Editer le chapitre", command= editerchapitre)
+    editchapitre = tk.Button(leftcolumn, text= "Editer le chapitre", command= lambda : editerchapitre(chemin,chapitre, chaplist.get(chaplist.curselection())))
     editchapitre.pack(fill=tk.X)
 
     leftcolumn.pack(side = tk.TOP, fill=tk.Y)
@@ -217,38 +241,42 @@ def editor3000(chemin,chapitre = 0):
 
     frametopcenter.pack(fill = tk.BOTH)
 
-    def get_entry_text():
-        print(texte_histoire.get(1.0,"end-1c"))
-
-
-    button = tk.Button(framecenter, text='get entry', command=get_entry_text)
-    button.pack(pady=10)
-
-
-
-
-    redirchap1 = tk.Entry(framebottomcenter)
-    redirchap2 = tk.Entry(framebottomcenter)
-    redirchap3 = tk.Entry(framebottomcenter)
+    soustitresredirs = tk.Label(framebottomcenter, text= "Choisissez les cartes vers lequel rediriger avec les choix")
+    subframe1 = tk.Frame(framebottomcenter)
+    subframe2 = tk.Frame(framebottomcenter)
+    subframe3 = tk.Frame(framebottomcenter)
+    redirchap1 = tk.Entry(subframe1,width = 3)
+    redirchap2 = tk.Entry(subframe2,width = 3)
+    redirchap3 = tk.Entry(subframe3,width = 3)
     redirchap1.insert(1,f"{content[str(chapitre)][3][0][0]}" )
     redirchap2.insert(1,f"{content[str(chapitre)][3][1][0]}" )
     redirchap3.insert(1,f"{content[str(chapitre)][3][2][0]}" )
-    redirchap1.pack()
-    redirchap2.pack()
-    redirchap3.pack()
-    framebottomcenter.pack()
+    redirchap1text = tk.Entry(subframe1,width = 60)
+    redirchap2text = tk.Entry(subframe2,width = 60)
+    redirchap3text = tk.Entry(subframe3,width = 60)
+    redirchap1text.insert(1,f"{content[str(chapitre)][3][0][1]}" )
+    redirchap2text.insert(1,f"{content[str(chapitre)][3][1][1]}" )
+    redirchap3text.insert(1,f"{content[str(chapitre)][3][2][1]}" )
+    redirchap1text.pack(side = tk.RIGHT)
+    redirchap2text.pack(side = tk.RIGHT)
+    redirchap3text.pack(side = tk.RIGHT)
+    redirchap1.pack(side = tk.LEFT)
+    redirchap2.pack(side = tk.LEFT)
+    redirchap3.pack(side = tk.LEFT)
+    subframe1.pack()
+    subframe2.pack()
+    subframe3.pack()
+    enregistrer = tk.Button(framebottomcenter, text= "Enregistrer chapitre", command= lambda : save(chapitre))
+    enregistrer.pack(side = tk.BOTTOM, fill=tk.X)
+    ecrirefichier =tk.Button(framebottomcenter, text= "Ecrire le livre", command= lambda : writefiles(chemin, chapitre))
+    ecrirefichier.pack(side = tk.BOTTOM, fill=tk.X)
+
+    framebottomcenter.pack(fill=tk.X)
     framecenter.pack()
 
 
 
-
-
-
-
-
-
-
-#accueil()
-editor3000("C:/Users/maxim/Documents/GitHub/livredontvousetesleheros-groupe-5/livres/livre 1")
+accueil()
+#editor3000("C:/Users/maxim/Documents/GitHub/livredontvousetesleheros-groupe-5/livres/livre 1")
 window.mainloop()
 
