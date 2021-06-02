@@ -142,6 +142,6 @@ def play(chemin,i=0):
 
 
 
-#accueil()
-play("C:/Users/maxim/Documents/GitHub/livredontvousetesleheros-groupe-5/livres/livre 1")
+accueil()
+#play("C:/Users/maxim/Documents/GitHub/livredontvousetesleheros-groupe-5/livres/livre 1")
 window.mainloop()
