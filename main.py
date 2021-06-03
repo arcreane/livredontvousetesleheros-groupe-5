@@ -8,7 +8,7 @@ import glob
 import tkinter as tk
 
 
-
+#initialisation de tkinter
 window=tk.Tk()
 
 window.minsize(650,260)
@@ -19,8 +19,9 @@ frame1 = tk.Frame(window)
 frame2 = tk.Frame(window)
 frame3 = tk.Frame(window)
 
-#frame1.grid(row=3, column=0, sticky="NESW")
+#
 window.geometry("1300x720")
+#charge les json dans des dicts
 def load(chemin):
     global persos, specs,content
     with open(chemin + "/persos.json") as f:
@@ -29,19 +30,22 @@ def load(chemin):
         specs = json.load(f)
     with open(chemin + "/content.json") as f:
         content = json.load(f)
+#choix des parties de l"histoire
 def boutondechoix(content, i,chemin):
     boutons = []
     for o in range(len(content[str(i)][3])):
         boutons.append(tk.Button(frame3, text=content[str(i)][3][o][1], command=lambda x=content[str(i)][3][o][0]: choixdelacarte(x,chemin)))
     return(boutons)
+
+#lance le chemin choisi (retrospéctivement : pourrait etre fait avec une focntion lambda)
 def choixdelacarte(x,chemin):
 
     play(chemin,x)
-
+#selctionne le personnage a (retrospéctivement : pourrait etre fait avec une focntion lambda)
 def choixduperso(x):
     global perso
     perso = x
-
+#vérifie que le chemin donné est bien un histoire( ne vérfie pas le contenu des fichiers, juste si ils existent)
 def ishistoire(path):
     listelocate = []
     listelocate = glob.glob(path + "/*.json")
@@ -50,7 +54,7 @@ def ishistoire(path):
         return(True)
     else :
         return(False)
-
+#liste les livres dans le chemin par défaut ici ./livres/
 def listlivres():
     path = "./livres/"
     retour = []
@@ -61,7 +65,7 @@ def listlivres():
         if text_files[i]in listelocate and text_files[i].replace("content.json", "")+"specs.json".replace("/","\\")in listelocate and text_files[i].replace("content.json", "")+"persos.json".replace("/","\\") in listelocate :
             retour.append((text_files[i].replace("content.json", "")))
     return(retour)
-
+#Selection du livre
 def accueil():
     title_label = tk.Label(frame1, text= "Bienvenue dans Le Jeu Dont Vous Êtes Le Héros : \n"
                    "Sélectionenez votre histoire dans la liste ou selectionner autre pour choisir un autre emplacement sur votre disque \n\n\n\n")
@@ -81,12 +85,12 @@ def accueil():
 
 
 
-#Initialisation des variables tkinter
+#Initialisation des variables tkinter#2
 listeFichiers = listlivres()
 listeFichiers.append("autre")
 listeCombo = ttk.Combobox(frame1, values=listeFichiers)
 
-
+#action du combobox de accueil
 def action(event):
     select = listeCombo.get()
     if select == "autre":
@@ -128,10 +132,9 @@ def play(chemin,i=0):
         titre_label.pack(side="top")
         title_label = tk.Label(frame2, text = content[str(i)][0][1])
         title_label.pack()
-        print(len(persos))
+
         for o in range(0,len(persos)):
             boutons = []
-            print(list(persos.keys())[o])
             boutons.append(tk.Button(frame3, text=list(persos.keys())[o],
                                      command=lambda x=content[str(i)][3][o][0]: choixdelacarte(x, chemin)))
             frame3.pack(side="bottom", padx=20, pady=20, expand="yes")
@@ -143,5 +146,6 @@ def play(chemin,i=0):
 
 
 accueil()
+#permet de lancer le jeu sans passer par laccueil
 #play("C:/Users/maxim/Documents/GitHub/livredontvousetesleheros-groupe-5/livres/livre 1")
 window.mainloop()

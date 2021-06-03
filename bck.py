@@ -6,7 +6,7 @@ import tkinter.ttk
 import os
 import glob
 import tkinter as tk
-
+#Initialisaton de tkinter
 window=tk.Tk()
 window.minsize(650,400)
 window.title('LDVELH')
@@ -16,14 +16,14 @@ frame2 = tk.Frame(window)
 frame3 = tk.Frame(window)
 #frame1.grid(row=3, column=0, sticky="NESW")
 window.geometry("1300x720")
-
+#fenetre da'lerte
 def alertwindow(motif):
     if motif == "conflifichiers" :
         MsgBox = tk.messagebox.askquestion('Conflit de fichiers', 'Êtes vous sur de vouloir écraser un livre déjà exisant ?',
                                            icon='warning', font=("Bahnschrift", 10))
         if MsgBox == 'yes':
             print("allesgut")
-
+#ICharegement des fichiers
 def load(chemin):
     global persos, specs,content
     with open(chemin + "/persos.json") as f:
@@ -33,16 +33,8 @@ def load(chemin):
     with open(chemin + "/content.json") as f:
         content = json.load(f)
 
-def boutondechoix(content, i,chemin):
-    boutons = []
-    for o in range(len(content[str(i)][3])):
-        boutons.append(tk.Button(frame3, text=content[str(i)][3][o][1], command=lambda x=content[str(i)][3][o][0]: choixdelacarte(x,chemin)))
-    return(boutons)
 
-def choixduperso(x):
-    global perso
-    perso = x
-
+#Verifie que le dossier contient bien une histoire
 def ishistoire(path):
     listelocate = []
     listelocate = glob.glob(path + "/*.json")
@@ -50,7 +42,7 @@ def ishistoire(path):
         return(True)
     else :
         return(False)
-
+#liste les livres contenus dans le dossier/livres
 def listlivres():
     path = "./livres/"
     retour = []
@@ -61,7 +53,7 @@ def listlivres():
         if text_files[i]in listelocate and text_files[i].replace("content.json", "")+"specs.json".replace("/","\\")in listelocate and text_files[i].replace("content.json", "")+"persos.json".replace("/","\\") in listelocate :
             retour.append((text_files[i].replace("content.json", "")))
     return(retour)
-
+#écran de sélection du livre a editer
 def accueil():
     title_label = tk.Label(frame1, text= "Bienvenue dans l'édieur du Jeu Dont Vous Êtes Le Héros : \n"
                    "Sélectionenez votre histoire déjà existante dans la liste ou sélectionnez Créer un nouveau livre pour choisir un autre emplacement sur votre disque pour en créer une nouvelle\n\n\n\n",wraplength = 600, font=("Bahnschrift", 12))
@@ -74,32 +66,33 @@ def accueil():
     listeCombo.bind("<<ComboboxSelected>>", action)
     frame1.pack(expand = "True")
 
-#Initialisation des variables tkinter
+#Initialisation des variables tkinter #2
 listeFichiers = listlivres()
 listeFichiers.append("Créer un nouveau livre")
 listeCombo = ttk.Combobox(frame1, values=listeFichiers)
-
+#Action du combobox dans accueil
 def action(event):
     select = listeCombo.get()
     if select == "Créer un nouveau livre":
         text_files = tk.filedialog.askdirectory(title = "Selectionnez un dossier", mustexist = True, initialdir = os.path.expanduser('~/Documents'))
         if not(ishistoire(text_files)):
             frame1.pack_forget()
-            print("proutf")
+
             newbook(text_files)
         else :
             alertwindow("conflifichiers")
     else :
-        print("prout2")
+
         editor3000(select)
         frame1.destroy()
-
+#ajoute un chapitre au livre
 def ajouterchapitre():
     global chaplist
-    content[str(len(content))] = [[f"Titre du chapitre {str(len(content)+1)}","Texte du chapitre"],0,0,[[],"H", "False"]]
+    content[str(len(content))] = [[f"Titre du chapitre {str(len(content)+1)}","Texte du chapitre"],0,0,[[0,""],[0,""],[0,""]],"H", "False"]
     chaplist.delete(0, tk.END)
     for line in range(len(content)):
         chaplist.insert(tk.END, content[str(line)][0][0])
+#permet de selectionner le chapitre
 def editerchapitre(chemin,chapitreactuel, chapitreaemmener):
     global chaplist,frameleft, framecenter,frameright,leftcolumn,rightcolumn,frametopcenter,framebottomcenter
     save(chapitreactuel)
@@ -111,19 +104,23 @@ def editerchapitre(chemin,chapitreactuel, chapitreaemmener):
     editor3000(chemin, int(valuechap)-1)
 
 
-#Éditeur
+#action du nouveau livre dans le me,u accieuil
 def newbook(chemin):
     with open(chemin + "/content.json", "w") as f:
-        json.dump({"0": [["Titre du 1", "Blabla premiere diapo"], 0, 0, [["1", "Sortir"], ["2", "Chercher la telecommande"], ["3", "prout"]], "H", "False"]}, f)
-    f = open(chemin + "/persos.json", "w")
-    f = open(chemin + "/content.json", "w")
-    editor3000(chemin)
+        json.dump({"0": [["Titre du 1", "Blabla premiere diapo"], 0, 0, [["1", "Sortir"], ["2", "Chercher la telecommande"], ["3", "blabla"]], "H", "False"]}, f)
 
+    with open(chemin + "/persos.json", "w") as f:
+        json.dump({"blankperso": ["lore", [2, 8, 5, 6], ["item1", "item2"], 100]}, f)
+
+    with open(chemin + "/specs.json", "w") as f:
+        json.dump({"cappas": ["Cappa1", "cappa2"], "fini": 0, "objets": {"1": ["item1", [0, 0, 0, 0]], }}, f)
+    editor3000(chemin)
+#sauvegarde les fichiers dans le disctionnaire
 def save(i):
     global titreduchapitre, texte_histoire,v,  redirchap1text, redirchap2text, redirchap3text,redirchap1,redirchap2,redirchap3
     content[str(i)]=[[titreduchapitre.get(),texte_histoire.get(1.0, tk.END+"-1c")],0,0,[[redirchap1.get(), redirchap1text.get()],[redirchap2.get(), redirchap2text.get()],[redirchap3.get(), redirchap3text.get()]],v.get(), "False"]
 
-
+#écrit le dictionnaire dans son fichier
 def writefiles(chemin, chapencours):
     save(chapencours)
     with open( chemin + "/content.json", 'w') as outfile:
@@ -132,7 +129,7 @@ def writefiles(chemin, chapencours):
         json.dump(persos, outfile)
     with open( chemin + "/specs.json", 'w') as outfile:
         json.dump(specs, outfile)
-
+#pour modifier le sac a dos
 def editentry(a):
 
     global mylist1
@@ -145,13 +142,14 @@ def editentry(a):
     inputobj.pack()
     inputobjsave = tk.Button(nouvellefenetre, text= "Enregistrer", command = lambda :updatelist(select, inputobj))
     inputobjsave.pack(fill= tk.Y)
+#met a jour la liste des chapitres
 def updatelist(select,inputobj):
     global specs
     #for i
     specs["objets"][inputobj] = specs["objets"][select]
     specs["objets"].pop(select)
     print(mylist1)
-
+#detruit les frames pour reconstruire l'écran
 def destroyframes():
     global frameleft, framecenter,frameright,leftcolumn,rightcolumn,frametopcenter,framebottomcenter
     framelist = [frameleft, framecenter,frameright,leftcolumn,rightcolumn,frametopcenter,framebottomcenter]
@@ -160,12 +158,13 @@ def destroyframes():
             framelist[i].destroy()
         except:
             print("nop")
-
+#editeur
 def editor3000(chemin,chapitre = 0):
     global frame2, frame3, perso, chaplist, titreduchapitre, texte_histoire,v,  redirchap1text, redirchap2text, redirchap3text,redirchap1,redirchap2,redirchap3,frameleft, framecenter,frameright,leftcolumn,rightcolumn,frametopcenter,framebottomcenter, mylist1
     frame2.destroy()
     frame3.destroy()
     load(chemin)
+    #création des frames néscessaires
     frameleft = tk.Frame(window)
     framecenter= tk.Frame(window)
     frameright= tk.Frame(window)
@@ -173,6 +172,7 @@ def editor3000(chemin,chapitre = 0):
     rightcolumn= tk.Frame(frameright)
     frametopcenter = tk.Frame(framecenter)
     framebottomcenter = tk.Frame(framecenter)
+
     frameleft.pack(side="left", fill =tk.Y)
     myscroll2 = tk.Scrollbar(rightcolumn)
     myscroll2.pack(side=tk.RIGHT, fill=tk.Y)
@@ -232,8 +232,6 @@ def editor3000(chemin,chapitre = 0):
     redirchap1 = tk.Entry(subframe1,width = 3)
     redirchap2 = tk.Entry(subframe2,width = 3)
     redirchap3 = tk.Entry(subframe3,width = 3)
-    print(chapitre)
-    print(content)
     redirchap1.insert(1,f"{content[str(chapitre)][3][0][0]}" )
     redirchap2.insert(1,f"{content[str(chapitre)][3][1][0]}" )
     redirchap3.insert(1,f"{content[str(chapitre)][3][2][0]}" )
@@ -260,5 +258,6 @@ def editor3000(chemin,chapitre = 0):
     framecenter.pack()
 
 accueil()
+#pour pouvoir acceder directement a l'éditeur avec un livre preselectionné
 #editor3000("C:/Users/maxim/Documents/GitHub/livredontvousetesleheros-groupe-5/livres/livre 1")
 window.mainloop()
