@@ -100,8 +100,7 @@ def editerchapitre(chemin,chapitreactuel, chapitreaemmener):
         if chapitreaemmener == content[str(line)][0][0] :
             valuechap = line
     destroyframes()
-    print(valuechap)
-    editor3000(chemin, int(valuechap)-1)
+    editor3000(chemin, int(valuechap))
 
 
 #action du nouveau livre dans le me,u accieuil
@@ -133,7 +132,7 @@ def writefiles(chemin, chapencours):
 def editentry(a):
 
     global mylist1
-    print(a)
+
     select = mylist1.get(1)
     nouvellefenetre = tk.Toplevel(window)
     nouvellefenetre.title("Modifier entrée")
@@ -148,7 +147,7 @@ def updatelist(select,inputobj):
     #for i
     specs["objets"][inputobj] = specs["objets"][select]
     specs["objets"].pop(select)
-    print(mylist1)
+
 #detruit les frames pour reconstruire l'écran
 def destroyframes():
     global frameleft, framecenter,frameright,leftcolumn,rightcolumn,frametopcenter,framebottomcenter
@@ -157,7 +156,7 @@ def destroyframes():
         try:
             framelist[i].destroy()
         except:
-            print("nop")
+            pass
 #editeur
 def editor3000(chemin,chapitre = 0):
     global frame2, frame3, perso, chaplist, titreduchapitre, texte_histoire,v,  redirchap1text, redirchap2text, redirchap3text,redirchap1,redirchap2,redirchap3,frameleft, framecenter,frameright,leftcolumn,rightcolumn,frametopcenter,framebottomcenter, mylist1
