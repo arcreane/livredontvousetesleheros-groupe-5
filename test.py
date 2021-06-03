@@ -1,50 +1,43 @@
-import tkinter as tk
+from tkinter import *
 
 
-def clean_exit():
-    root.destroy()
 
 
-def alternate_window(is_in_root, is_in_window, window):
-    def alternate_processing():
-        if is_in_root and not is_in_window:
-            root.withdraw()
-            window.deiconify()
-        else:
-            window.withdraw()
-            root.deiconify()
-
-    return alternate_processing
 
 
-def create_window(window, text_label):
-    label = tk.Label(window, text=text_label)
-    button = tk.Button(window, text="Revenir vers root", command=alternate_window(False, True, window))
-    label.grid(column=0, row=0)
-    button.grid(column=0, row=1)
-    window.protocol("WM_DELETE_WINDOW", clean_exit)
+# Création de la fenêtre
+jeu = Tk()
+jeu.winfo_screenwidth()
+jeu.winfo_screenheight()
+jeu.geometry("900x600")
 
 
-root = tk.Tk()
+n.add(o2, text='Chapitre 2')  # Nom de l'onglet 2
+#Les Frames
+    #Frame o1
+etiquette = Label(o1, text='Votre histoire :')
+etiquette.pack(padx=5, pady=5)
+etiquette.place(x=0, y=10)
+etiquette.pack(padx=5, pady=5, side=TOP)
+etiquette.place(x=5, y=00)
 
-a_window = tk.Toplevel(root)
-b_window = tk.Toplevel(root)
-c_window = tk.Toplevel(root)
+scrollbar = Scrollbar(o1)
+texte_histoire = Text(o1, font=("Arial", 10), width=50, yscrollcommand=scrollbar.set)
+scrollbar.config(command=texte_histoire.yview)
 
-create_window(a_window, "Je suis dans la fenetre a")
-create_window(b_window, "Je suis dans la fenetre b")
-create_window(c_window, "Je suis dans la fenetre c")
+texte_histoire.place(x=0, y=0, height=50, width=50)
+texte_histoire.pack(padx=5, pady=20)
+scrollbar.pack(side=RIGHT, fill=Y)
 
-a_window.withdraw()
-b_window.withdraw()
-c_window.withdraw()
+entree = Entry(o1, font=("Arial", 10),width=5000)
+entree.place(x=50, y=50, height=200, width=500000)
+entree.pack(padx=5, pady=5, side=BOTTOM)
 
-a_button = tk.Button(root, command=alternate_window(True, False, a_window), text="affiche fenetre a")
-b_button = tk.Button(root, command=alternate_window(True, False, b_window), text="affiche fenetre b")
-c_button = tk.Button(root, command=alternate_window(True, False, c_window), text="affiche fenetre c")
+#Les boutons
+    #Boutons onglet 1
+Button(o1, text="Enregistrer",).pack()
+Button(o1, text='Quitter', command=jeu.destroy).pack()
+    #Boutons onglet 2
+Button(o2, text='En attente', command=None).pack()
 
-a_button.grid()
-b_button.grid(column=1, row=0)
-c_button.grid(column=2, row=0)
-
-root.mainloop()
+jeu.mainloop()

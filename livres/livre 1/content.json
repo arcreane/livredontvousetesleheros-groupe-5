@@ -1,6 +1,1 @@
-{
-  "0" : ["Blabla",0,0,[[1, "Sortir"],[2, "Chercher la telecommande"],[3, "prout"]],"H", "False"],
-  "1" : ["Blabla",0,0,[[1, "Sortir"],[2, "Chercher la telecommande"],[3, "prout"]],"H", "False"],
-  "2" : ["Blabla",0,0,[[1, "Sortir"],[2, "Chercher la telecommande"],[3, "prout"]],"H", "False"],
-  "3" : ["Blabla",0,0,[[1, "Sortir"],[2, "Chercher la telecommande"],[3, "prout"]],"H", "True"]
-}
+{"0": [["Titre du 1", "Blabla premiere diapo"], 0, 0, [["1", "Sortir"], ["2", "Chercher la telecommande"], ["3", "prout"]], "H", "False"], "1": [["Titre du 2", "Blabla premiere diapo"], 0, 0, [[1, "Sortir"], [2, "Chercher la telecommande"], [3, "prout"]], "H", "False"], "2": [["Titre du 3", "Blabla deucxieme diapo"], 0, 0, [["1", "Sortir"], ["2", "Chercher la telecommande"], ["3", "prout"]], "H", "False"], "3": [["Test", "Test"], 0, 0, [["1", "Sortir"], ["2", "Chercher la telecommande"], ["3", "prout"]], "H", "False"], "4": [["Titre du chapitre 5", "Texte du chapitre"], 0, 0, [[], "H", "False"]]}

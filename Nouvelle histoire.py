@@ -15,12 +15,21 @@ def afficheZoneSaisie():
     # return inutile : modification d'une variable globale
 
 
+
 def clean_exit():
     window.destroy()
 
 def alternate_window(is_in_root, is_in_window, window):
     def alternate_processing():
         if is_in_root and not is_in_window:
+
+
+
+
+def alternate_window(is_in_window, is_in_root, window):
+    def alternate_processing():
+        if is_in_root and not is_in_root:
+
             window.withdraw()
             window.deiconify()
         else:
@@ -32,7 +41,7 @@ def alternate_window(is_in_root, is_in_window, window):
 
 def create_window(window, text_label):
     label = tk.Label(window, text=text_label)
-    button = tk.Button(window, text="Revenir vers root", command=alternate_window(False, True, window))
+    button = tk.Button(window, text="Revenir vers window", command=alternate_window(False, True, window))
     label.grid(column=0, row=0)
     button.grid(column=0, row=1)
     window.protocol("WM_DELETE_WINDOW", clean_exit)
@@ -40,8 +49,7 @@ def create_window(window, text_label):
 
 # Création de la fenêtre
 window = tk.Tk()
-window.winfo_screenwidth()
-window.winfo_screenheight()
+
 window.geometry("900x600")
 
 
@@ -85,9 +93,19 @@ menu_deroulant_chapitre_suivant = tk.Menu(menu_chapitre_suivant)
 menu_deroulant_chapitre_suivant.add_command(label="n°1")
 menu_chapitre_suivant.configure(menu=menu_deroulant_chapitre_suivant)
 
+#Bouton pour ajouter un chapitre
 
+"""o3 = tk.Frame(window)
+o3.pack(side = "left")
 
+creationdechapitre = tk.Button(o3,width = 30)
+creationdechapitre.pack()
+"""
 
+bottomframe = tk.Frame(window)
+bottomframe.pack( side = tk.BOTTOM )
+blackbutton = tk.Button(bottomframe, text="Black", fg="black")
+blackbutton.pack( side = tk.BOTTOM)
 
 
 
