@@ -1,6 +1,6 @@
 Voici notre projet d'informatique 
 
-pas de fichiers requirements.txt car na aucune dépendance
+pas de fichiers requirements.txt car n"as aucune dépendance
 
 
 lancer accueil.py sous windows 
